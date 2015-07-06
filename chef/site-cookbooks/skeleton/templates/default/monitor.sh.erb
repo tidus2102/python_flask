@@ -1,0 +1,4 @@
+#!/bin/sh
+<%- stat_port = node[:skeleton][:stat_port] -%>
+
+uwsgitop 127.0.0.1:<%= stat_port %>

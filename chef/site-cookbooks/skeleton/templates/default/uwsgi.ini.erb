@@ -1,0 +1,23 @@
+<%- log_dir = node[:skeleton][:log_dir] -%>
+<%- site_dir = node[:skeleton][:site_dir] -%>
+<%- app_name = node[:skeleton][:app_name] -%>
+<%- stat_port = node[:skeleton][:stat_port] -%>
+<%- socket_dir = node[:skeleton][:socket_dir] -%>
+<%- pid_dir = node[:skeleton][:pid_dir] -%>
+[uwsgi]
+
+socket = <%= socket_dir%>/<%= app_name %>-uwsgi.sock
+chmod-socket = 666
+logto = <%= log_dir %>/uwsgi.log
+chdir = <%= site_dir %>
+pidfile = <%= pid_dir %>/<%= app_name %>-uwsgi.pid
+module = app
+callable = app
+catch-exceptions
+offload-threads = 1
+processes = 4
+threads = 100
+idle = 3600
+buffer-size = 8192
+gevent = 100
+stats = 127.0.0.1:<%= stat_port %>

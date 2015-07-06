@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. <%= node[:skeleton][:python][:virtualenv] %>/bin/activate
+
+set -e
+
+bin_dir="$(cd "$(dirname "$0")/.."; pwd)"
+cd "$bin_dir"
+
+exec python worker.py

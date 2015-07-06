@@ -1,0 +1,45 @@
+from config.common import config
+
+<% db = node[:skeleton][:db] -%>
+<% domain = node[:skeleton][:server_name] -%>
+<% emails = node[:skeleton][:emails] -%>
+<% mandrill = emails[:mandrill] -%>
+<% env = node[:skeleton][:env] -%>
+<% remote_console = node[:skeleton][:remote_console] -%>
+
+config.update({
+    'DOMAIN': '<%= domain %>',
+    'ENDPOINT': '<%= node[:skeleton][:endpoint] %>',
+    'PROTOCOL': '<%= node[:skeleton][:protocol] %>',
+    'SQLALCHEMY_DATABASE_URI': 'postgresql://<%= db[:user] %>:<%= db[:password] %>@<%= db[:host] %>/<%= db[:database] %>',
+    'SECRET_KEY': '<%= node[:skeleton][:secret_key]%>',
+    'SQLALCHEMY_ECHO': <%= db[:debug] ? 'True' : 'False' %>,
+    'CACHE_TYPE': 'simple',
+    'email': {
+        'mandrill': {
+            'api_key': '<%= mandrill[:api_key] %>'
+        },
+        'sender_mail': 'skeletonteam@gmail.com',
+        'sender_name': 'skeleton Team',
+        'prefix': '[skeleton]',
+        'admin': '<%= emails[:admin] %>',
+        'errors': [
+          <% emails[:errors].each do |address|  %>
+            '<%= address %>',
+          <% end %>
+        ],
+        <% if emails[:server] %>
+        'server': '<%= emails[:server] %>',
+        <% end %>
+        'debug': <%= emails[:debug] ? 'True' : 'False' %>,
+    },
+    <% if remote_console[:port] and remote_console[:passwd_file] %>
+    'remote_console': {
+        'port': <%= remote_console[:port] %>,
+        'passwd_file': '<%= remote_console[:passwd_file] %>'
+    },
+    <% end %>
+    'env': '<%= env %>',
+    'debug': <%= node[:skeleton][:debug] ? 'True' : 'False' %>,
+})
+

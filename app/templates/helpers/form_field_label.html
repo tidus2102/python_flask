@@ -1,0 +1,16 @@
+{% macro render(field, readonly=False) %}
+
+<div class="form-group">
+  <label class="control-label col-md-4">{{ field.label.text }}</label>
+  <div class="col-md-8">
+    {% if readonly %}
+      {{field(placeholder=field.label.text, class='form-control', readonly='readonly')}}
+    {% else %}
+      {{field(placeholder=field.label.text, class='form-control')}}
+    {% endif %}
+    <div class="alert alert-danger hide" id="{{ field.name }}_error"></div>
+  </div>
+</div>
+
+
+{% endmacro %}

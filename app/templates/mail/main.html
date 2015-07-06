@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>uPaty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+</html>
+<body style="width:500px; margin:auto; font-family:Helvetica;">
+    <div class="container" style="border: solid  #58c7dd 1px; margin: 20px 0px; padding: 40px; font-size: 14px; line-height: 21px;">
+		<img src="http://api.upaty.com/static/images/email/logo.png" style="width: 60px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
+
+		{% block content %}
+		{% endblock %}
+
+		<p>
+            {{_("If you need any help, we are there for you at")}} <span class="e-mail" style="color: #00809e"><a href="mailto:upatyteam@gmail.com">upatyteam@gmail.com</a> </span>
+			<br /><br />
+            {{ _("Happy Party!") }}<br />
+			The uPaty Team
+		</p>
+	</div>
+</body>
+</html>

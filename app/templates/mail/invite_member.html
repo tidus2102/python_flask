@@ -1,0 +1,14 @@
+{% extends "mail/main.html" %}
+
+{% block content %}
+
+{{ _("Hello %(invitee_name)s", invitee_name=invitee_name) | e }},
+<p>
+    {{ _("Your friend <span style='color: #00809e'>%(invitor_name)s</span> has invited you to the party %(paty_title)s", invitor_name=user.full_name, paty_title=paty_title) }}<br/><br/>
+    <a href="{{ paty_url }}" style="color: #00809e; font-weight:bold; text-decoration:none;">{{ _("View detail here") }}</a> <br/><br/>
+    {{ _("uPaty is an amazing and simple tool to create party and invite your best friends by one touch.") }}
+</p>
+
+<a href="https://itunes.apple.com/us/app/upaty/id975147318" style="color: #00809e; font-weight:bold; text-decoration:none;">{{ _("Click Here to Get Started") }}</a>
+
+{% endblock %}

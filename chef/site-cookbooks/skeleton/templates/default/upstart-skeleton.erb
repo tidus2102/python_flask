@@ -1,0 +1,7 @@
+
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+exec su -s /bin/sh -c 'exec "$0" "$@"' <%= node[:skeleton][:app_user] %> -- <%= node[:skeleton][:site_dir] %>/scripts/skeleton.sh
+respawn

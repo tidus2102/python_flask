@@ -1,0 +1,13 @@
+{% extends "mail/main.html" %}
+
+{% block content %}
+
+{{ _("Hello %(user_name)s", user_name=user.full_name) | e }},
+
+<p>
+    {{ _("Thank you for joining uPaty. Let's create amazing & cool party in a simple way and invite your best friends by one touch." )}}
+    <br /><br />
+    {{ _("Enjoy exploring us!") }}
+<p>
+
+{% endblock %}

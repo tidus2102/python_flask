@@ -1,0 +1,35 @@
+table: tbl_user
+from: null
+to: hn_1
+depends:
+  - ["tbl_photo", hn_1]
+sql: |
+  CREATE TABLE tbl_user (
+    id SERIAL NOT NULL PRIMARY KEY,
+    photo_id INT REFERENCES tbl_photo(id) ON DELETE SET NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    birthday DATE,
+    facebook_id TEXT,
+    facebook_token TEXT,
+    secret_token TEXT,
+    status TEXT DEFAULT 'unactivated', -- unactivated, activated, blocked
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+  );
+
+---
+table: tbl_user
+from: hn_1
+to: hn_2
+sql: |
+  ALTER TABLE tbl_user ADD COLUMN updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+
+---
+table: tbl_user
+from: hn_2
+to: hn_3
+sql: |
+  ALTER TABLE tbl_user ADD COLUMN fb_avatar TEXT

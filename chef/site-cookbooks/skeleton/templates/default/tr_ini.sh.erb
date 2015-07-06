@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. <%= node[:skeleton][:python][:virtualenv] %>/bin/activate
+
+set -e
+
+bin_dir="$(cd "$(dirname "$0")/.."; pwd)"
+cd "$bin_dir"
+
+
+pybabel extract -F config/babel.cfg -k lazy_gettext -o messages.pot .
+pybabel init -i messages.pot -d <%= node[:skeleton][:app_name] %>/translations -l $1

@@ -1,0 +1,18 @@
+table: tbl_photo
+from: null
+to: hn_1
+sql: |
+  CREATE TABLE tbl_photo (
+    id SERIAL NOT NULL PRIMARY KEY,
+    file_name TEXT,
+    model_name TEXT,
+    model_id INT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+  );
+
+---
+table: tbl_photo
+from: hn_1
+to: hn_2
+sql: |
+  ALTER TABLE tbl_photo ADD COLUMN updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
