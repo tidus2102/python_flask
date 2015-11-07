@@ -16,8 +16,7 @@ class User(UserMixin, Base, db.Model):
     # Attributes #
     ##############
     id = db.Column(db.Integer, primary_key=True)
-    photo_id = db.Column(db.UnicodeText())
-    fb_avatar = db.Column(db.UnicodeText())
+    avatar = db.Column(db.UnicodeText())
     first_name = db.Column(db.UnicodeText())
     last_name = db.Column(db.UnicodeText())
     username = db.Column(db.UnicodeText())

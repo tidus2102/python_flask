@@ -22,7 +22,7 @@ class UserToken(Base, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('tbl_user.id'))
     device_id = db.Column(db.UnicodeText())
     access_token = db.Column(db.UnicodeText())
-    os = db.Column(db.UnicodeText(), default='iOS')
+    device_type = db.Column(db.UnicodeText(), default=u'apns')
     is_active = db.Column(db.Boolean, default=True)
 
     # TODO: Store push notification end points separately

@@ -1,6 +1,6 @@
 from flask.ext.sqlalchemy import models_committed
 from app import mail
-from app.models.email_message import EmailMessage
+#from app.models.email_message import EmailMessage
 
 from app import notification as pnotification
 

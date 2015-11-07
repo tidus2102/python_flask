@@ -5,7 +5,7 @@ from flask.ext.babelex import gettext
 from app.models.common import db
 from app.models.user import User
 from app.models.user_token import UserToken
-from app.models.email_message import EmailMessage
+#from app.models.email_message import EmailMessage
 from flask.ext.restful import reqparse, abort
 from app.utils import helper
 import bcrypt
