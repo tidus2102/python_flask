@@ -32,7 +32,7 @@ IMG_SIZES = {
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 config = {
-    'DOMAIN': 'baggable.cogini.com',
+    'DOMAIN': 'skeleton.bestacker.com',
     'MAX_CONTENT_LENGTH': 2 * 1024 * 1024,
     'IMG_DIRS': IMG_DIRS,
     'IMG_SIZES': IMG_SIZES,
@@ -54,5 +54,5 @@ config = {
         ('vi', u'Tiếng Việt'),
         ('en', u'English')
     ),
-    'english_domains': ['baggable.cogini.com']
+    'english_domains': ['skeleton.bestacker.com']
 }

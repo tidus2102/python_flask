@@ -7,12 +7,6 @@ sql: |
     file_name TEXT,
     model_name TEXT,
     model_id INT,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
   );
-
----
-table: tbl_photo
-from: hn_1
-to: hn_2
-sql: |
-  ALTER TABLE tbl_photo ADD COLUMN updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()

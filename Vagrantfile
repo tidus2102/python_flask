@@ -29,8 +29,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
-    config.vm.network :forwarded_port, guest: 80, host: 9300
-    config.vm.network :forwarded_port, guest: 22, host: 9301, id: "ssh", auto_correct: true
+    config.vm.network :forwarded_port, guest: 80, host: 9990
+    config.vm.network :forwarded_port, guest: 22, host: 9991, id: "ssh", auto_correct: true
 
     apt_cache = './apt-cache'
     FileUtils.mkpath "#{apt_cache}/partial"

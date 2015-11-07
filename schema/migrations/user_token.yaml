@@ -8,9 +8,9 @@ sql: |
   CREATE TABLE tbl_user_token (
     id SERIAL NOT NULL PRIMARY KEY,
     user_id INT REFERENCES tbl_user(id) ON DELETE CASCADE,
+    device_type TEXT DEFAULT 'apns',
     device_id TEXT,
     device_token TEXT,  -- Use for notification
-    os TEXT DEFAULT 'iOS',
     access_token TEXT,
     is_active BOOLEAN DEFAULT TRUE,
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),

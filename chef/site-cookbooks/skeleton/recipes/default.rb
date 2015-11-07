@@ -7,11 +7,16 @@ site_dir = skeleton[:site_dir]
 log_dir = node[:skeleton][:log_dir]
 script_dir = "#{site_dir}/scripts"
 socket_dir = skeleton[:socket_dir]
+static_dir = "#{site_dir}/app/static"
+uploads_dir = "#{static_dir}/uploads"
 
 include_recipe 'apt'
 include_recipe 'nginx'
 include_recipe 'python'
 include_recipe 'postgresql::client'
+include_recipe 'redisio'
+include_recipe 'redisio::install'
+include_recipe 'redisio::enable'
 
 if db[:host] == 'localhost'
 
@@ -57,7 +62,6 @@ end
     end
 end
 
-
 python_virtualenv python_env do
     action :create
     group app_user
@@ -97,11 +101,11 @@ template "/etc/init/#{app_name}.conf" do
     source 'upstart-skeleton.erb'
 end
 
-template "#{site_dir}/worker.py" do
-    source 'worker.py.erb'
-    owner app_user
-    group app_user
-end
+#template "#{site_dir}/worker.py" do
+#    source 'worker.py.erb'
+#    owner app_user
+#    group app_user
+#end
 
 template "#{script_dir}/worker.sh" do
     mode '755'
@@ -189,4 +193,27 @@ end
 
 template "/etc/logrotate.d/#{app_name}" do
     source 'logrotate.erb'
+end
+
+dirs = [
+    "#{uploads_dir}",
+    "#{uploads_dir}/photo",
+    "#{uploads_dir}/photo/origin",
+    "#{uploads_dir}/photo/crop",
+    "#{uploads_dir}/photo/large",
+    "#{uploads_dir}/photo/medium",
+    "#{uploads_dir}/photo/small",
+]
+
+dirs.each do |component|
+    the_dir = "#{component}"
+    bash "Create folders #{the_dir}" do
+        code <<-EOH
+            mkdir -p #{the_dir}
+            chown -R #{app_user} #{the_dir}
+            chgrp -R www-data #{the_dir}
+            chmod -R g+rw #{the_dir}
+            find #{the_dir} -type d | xargs chmod g+x
+        EOH
+    end
 end

@@ -12,7 +12,7 @@ default[:skeleton][:secret_key] = 'dHKEf1IXUV6pHULHaAOUaL0podQzs9ubg'
 
 default[:skeleton][:python][:virtualenv] = '/home/skeleton/.virtualenvs/skeleton'
 default[:skeleton][:has_loadbalancer] = false
-default[:skeleton][:endpoint] = 'skeleton.com'
+default[:skeleton][:endpoint] = 'skeleton.cogini.com'
 default[:skeleton][:protocol] = 'http://'
 
 # This is more like a constant. Don't change it, as v0.11.12 has error
@@ -46,7 +46,8 @@ default[:skeleton][:debug] = true
 #    :debug => false,
 #}
 
-#default[:skeleton][:gcm] = {
-#    :api_key => "<an-api-key>",
-#    :debug => false,
-#}
+#default[:audi_manager][:gcm][:api_key] = "AIzaSyCRTK18MJ4mmOwYe_PorRFAdd26oQKH_Xc"
+
+# Redis config
+default[:redisio][:default_settings][:logfile] = '/var/log/redis.log'
+default[:redisio][:job_control] = 'upstart'

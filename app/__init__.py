@@ -6,7 +6,7 @@ from flask.ext.babelex import Babel, lazy_gettext
 from app.models.common import db
 from app.utils.auth import login_manager
 from config.main import config
-from nodes.web.resources import resources
+from nodes.web.web import web_blueprint
 from nodes.api.base import api_blueprint
 from nodes.api.v1 import api_v1_blueprint
 from flask_debugtoolbar import DebugToolbarExtension
@@ -20,7 +20,7 @@ db.init_app(app)
 login_manager.init_app(app)
 
 # Web blueprints
-app.register_blueprint(resources)
+app.register_blueprint(web_blueprint)
 
 # API blueprints
 app.register_blueprint(api_blueprint)
