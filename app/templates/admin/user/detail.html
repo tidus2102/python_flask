@@ -1,0 +1,62 @@
+{% extends "admin/layout/admin.html" %}
+{% block content %}
+    <div class="col-md-6 col-md-offset-3">
+        <form id="js-user-form" class="form-horizontal" method="POST" action="/admin/user/id/{{ user.id }}">
+            <div class="form-group">
+                <label >First Name</label>
+                <input type="text" class="form-control" name="first_name" value="{{ user.first_name or '' }}" >
+            </div>
+            <div class="form-group">
+                <label >Last Name</label>
+                <input type="text" class="form-control" name="last_name" value="{{ user.last_name or '' }}">
+            </div>
+            <div class="form-group">
+                <label >Username (ID)</label>
+                <input type="text" class="form-control" name="username" value="{{ user.username }}">
+            </div>
+            <div class="form-group">
+                <label >Password</label>
+                <input type="password" class="form-control" name="password" >
+            </div>
+            <div class="form-group">
+                <label >Role</label>
+                <select name="role" class="form-control">
+                    <option value="Admin" {{ "selected = 'selected'" if user.isAdmin() else None }}>Admin</option>
+                    <option value="Vice President" {{ "selected = 'selected'" if user.isVP() else None }}>Vice President</option>
+                    <option value="Sales Manager" {{ "selected = 'selected'" if user.isSalesManager() else None }}>Sales Manager</option>
+                    <option value="Sales Consultant" {{ "selected = 'selected'" if user.isSalesConsultant() else None }}>Sales Consultant</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label >Showroom Distribution</label>
+                <select id="js-distribution-list" class="form-control" name="distribution_id">
+{#                    <option value="All">All</option>#}
+                    {% set dealer_id = 0 %}
+                    {% for location in locations %}
+                        {% if dealer_id != location.dealer_id %}
+                            {% set dealer_id = location.dealer_id %}
+                            {% set dealer_code = location.dealer.code %}
+                            <option {{ "selected ='selected'" if user.dealer_id and user.dealer_id == dealer_id else '' }} data-dealer="1" value="{{ dealer_id }}">{{ dealer_code }}</option>
+                        {% endif %}
+                        <option {{ "selected ='selected'" if user.location_id and user.location_id == location.id else '' }} data-dealer="" value="{{ location.id }}">-- {{ "%s / %s" % (location.dealer.code, location.code) }}</option>
+                    {% endfor %}
+                </select>
+                <input id="js-is-dealer" name="is_dealer" type="hidden" value="{{ 1 if user.location_id else 0 }}">
+            </div>
+            <div class="form-group">
+                <label >Notice</label>
+                <textarea rows="3" class="form-control" name="notice" >{{ user.notice or "" }}</textarea>
+            </div>
+            <div class="form-group text-right">
+                <button id="js-submit" type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).on('change', '#js-distribution-list', function(){
+            var is_dealer = $(this).find(':selected').attr('data-dealer');
+            $('#js-is-dealer').val(is_dealer);
+        });
+    </script>
+{% endblock %}

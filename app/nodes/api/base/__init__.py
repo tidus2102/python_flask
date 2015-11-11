@@ -18,8 +18,14 @@ from app.utils import custom_json
 
 # Hack to update the custom json dump support decimal
 def custom_json_output(data, code, headers=None):
+    if not 'success' in data:
+        data['success'] = False
+
     dumped = custom_json.dumps(data, use_decimal=True)
-    resp = make_response(dumped, code)
+    if code == 403:
+        resp = make_response(dumped, 403)
+    else:
+        resp = make_response(dumped, 200)
     resp.headers.extend(headers or {})
     return resp
 

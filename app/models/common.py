@@ -10,8 +10,7 @@ db = SQLAlchemy()
 
 # SQLAlchemy does not support Datetime timezone aware type
 # e.g DateTime(tzinfo=pytz.UTC)
-# manually create this type.
-# Todo: should change all db.DateTime to UTCDateTime
+# Todo: Change all db.DateTime to UTCDateTime
 class UTCDateTime(TypeDecorator):
     impl = DateTime
     def process_bind_param(self, value, engine):

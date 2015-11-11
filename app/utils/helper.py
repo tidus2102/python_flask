@@ -205,9 +205,9 @@ def getLocale():
     if locale:
         return locale
     else:
-        host = request.headers['Host']
-        if host in current_app.config['english_domains']:
-            return 'en'
+        # host = request.headers['Host']
+        # if host in current_app.config['english_domains']:
+        #     return 'en'
 
         # Favor first language for now
         return allowedLocales()[0]
@@ -243,3 +243,37 @@ def checkSublist(sublist, list):
         return set(sublist).issubset(list)
     except:
         return False
+
+def returnSuccess(data):
+    return {
+        "status": "OK",
+        "data": data
+    }
+
+def returnFail(status, message):
+    return {
+        "status": status,
+        "message": gettext(message)
+    }
+
+def isActiveRoute(url):
+    if url == '':
+        if request.path == '/':
+            return True
+        else:
+            return False
+    elif url in request.path:
+        return True
+    else:
+        return False
+
+def getLastDayOfWeek(dt):
+    return dt - timedelta(days=date.today().weekday()) + timedelta(days=6)
+
+def getLastDayOfMonth(dt):
+    if dt.month == 12:
+        return dt.replace(day=31)
+    return dt.replace(month=dt.month+1, day=1) - timedelta(days=1)
+
+def getGA():
+    return current_app.config['GA']

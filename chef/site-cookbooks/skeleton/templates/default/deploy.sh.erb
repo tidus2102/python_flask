@@ -5,14 +5,14 @@
 
 . <%= node[:skeleton][:python][:virtualenv] %>/bin/activate
 
-# update lated version
+# update latest version
 cd <%= site_dir %>
 sudo git fetch
-sudo git reset origin/production --hard
+sudo git reset origin/master --hard
 
-# Run update schemup
-cd <%= site_dir %>/schema
-python update.py commit
+# Run update db schema
+#cd <%= site_dir %>/schema
+#python update.py commit
 
 # Restart service
-sudo service <%= node[:skeleton][:app_name] %> restart
+sudo restart <%= node[:skeleton][:app_name] %>

@@ -1,20 +1,23 @@
 from config.common import config
 
-<% db = node[:skeleton][:db] -%>
-<% domain = node[:skeleton][:server_name] -%>
-<% emails = node[:skeleton][:emails] -%>
+<% skeleton = node[:skeleton] -%>
+<% db = skeleton[:db] -%>
+<% emails = skeleton[:emails] -%>
 <% mandrill = emails[:mandrill] -%>
-<% env = node[:skeleton][:env] -%>
-<% remote_console = node[:skeleton][:remote_console] -%>
+<% env = skeleton[:env] -%>
+<% remote_console = skeleton[:remote_console] -%>
 
 config.update({
-    'DOMAIN': '<%= domain %>',
-    'ENDPOINT': '<%= node[:skeleton][:endpoint] %>',
-    'PROTOCOL': '<%= node[:skeleton][:protocol] %>',
-    'SQLALCHEMY_DATABASE_URI': 'postgresql://<%= db[:user] %>:<%= db[:password] %>@<%= db[:host] %>/<%= db[:database] %>',
-    'SECRET_KEY': '<%= node[:skeleton][:secret_key]%>',
+    'env': '<%= env %>',
+    'debug': <%= skeleton[:debug] ? 'True' : 'False' %>,
+    'DOMAIN': '<%= skeleton[:server_name] %>',
+    'ENDPOINT': '<%= skeleton[:endpoint] %>',
+    'PROTOCOL': '<%= skeleton[:protocol] %>',
+    'SQLALCHEMY_DATABASE_URI': '<%= db[:driver] %>://<%= db[:user] %>:<%= db[:password] %>@<%= db[:host] %>/<%= db[:database] %>',
+    'SECRET_KEY': '<%= skeleton[:secret_key]%>',
     'SQLALCHEMY_ECHO': <%= db[:debug] ? 'True' : 'False' %>,
     'CACHE_TYPE': 'simple',
+    'SQLALCHEMY_TRACK_MODIFICATIONS': True,
     'email': {
         'mandrill': {
             'api_key': '<%= mandrill[:api_key] %>'
@@ -39,7 +42,14 @@ config.update({
         'passwd_file': '<%= remote_console[:passwd_file] %>'
     },
     <% end %>
-    'env': '<%= env %>',
-    'debug': <%= node[:skeleton][:debug] ? 'True' : 'False' %>,
+    'apns': {
+        'sandbox': <%= env == 'prod' ? 'False' : 'True' %>,
+        'cert_file': 'config/<%= skeleton[:app_name] %><%= env == 'prod' ? '' : '_dev' %>.pem',
+        'debug': False,
+    },
+    'gcm': {
+        'api_key': '<%= skeleton[:gcm][:api_key] %>',
+        'debug': False,
+    },
 })
 

@@ -1,7 +1,7 @@
 <% db = node[:skeleton][:db] -%>
 {
-    "database": "<%= db[:database] %>",
     "host"    : "<%= db[:host] %>",
-    "user"    : "<%= db[:user] %>",
+    "database": "<%= db[:database] %>",
+    "user"    : "<%= db[:username] %>",
     "password": "<%= db[:password] %>"
 }

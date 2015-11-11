@@ -7,4 +7,4 @@ set -e
 bin_dir="$(cd "$(dirname "$0")/.."; pwd)"
 cd "$bin_dir"
 
-exec uwsgi --ini config/uwsgi.ini
+exec uwsgi --py-autoreload 1 --ini config/uwsgi.ini

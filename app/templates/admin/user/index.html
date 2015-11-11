@@ -1,0 +1,78 @@
+{% extends "admin/layout/admin.html" %}
+{% block content %}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th class="">Dealer</th>
+                <th>Username</th>
+                <th class="hidden-xs">Showroom Distribution</th>
+                <th class="hidden-xs">Role</th>
+                <th class="hidden-sm hidden-xs">Notice</th>
+                <th><a href="/admin/user/create" class="btn btn-primary">Create User</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr id="js-user{{ user.id }}">
+                <td class="">
+                    {% if user.isAdmin() %}
+                        WS
+                    {% else %}
+                        {{ user.getDealerCode() }}
+                    {% endif %}
+                </td>
+                <td style="width: 128px">
+                    {{ user.username }}
+                </td>
+                <td class="hidden-xs">
+                    {% if user.isAdmin() %}
+                        All
+                    {% else %}
+                        {{ user.dealer.getLocationList() if user.dealer_id else user.getLocationCode() }}
+{#                        {% if user.isVP() %}#}
+{#                            {{ user.location.getDealerList() }}#}
+{#                        {% else %}#}
+{#                            {{ user.getDealerCode() }}#}
+{#                        {% endif %}#}
+                    {% endif %}
+                </td>
+                <td class="hidden-xs">
+                    {{ user.role }}
+                </td>
+                <td class="hidden-sm hidden-xs">
+                    {{ user.notice or "" }}
+                </td>
+
+                <td>
+                    {% if not user.isAdmin() %}
+                        <a class="btn btn-primary" href="/admin/user/id/{{ user.id }}">Edit</a>
+                        <a class="js-delete btn btn-danger" data-id="{{ user.id }}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).on('click', '.js-delete', function(e) {
+            e.preventDefault();
+
+            var id = $(this).attr('data-id');
+            var strconfirm = confirm('Are you sure to delete this user?');
+            if (strconfirm == true) {
+                $.post('/admin/user/delete', {id: id}, function (result) {
+                    if (result.success) {
+                        $('#js-user' + id).remove();
+                    } else
+                        alert(result.message);
+                });
+            }
+        });
+
+        {#$("#js-location-list").dropdownchecklist({
+            emptyText: "Distribution",
+            firstItemChecksAll: true,
+        });#}
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+cd /vagrant
+. set_env.sh
+
+1. Create migration file:
+alembic revision -m "<table> <version> <dev_name> <changes>"
+
+Ex: alembic revision -m "tbl_user 1 hn add update_at column"
+
+2. Upgrade:
+alembic upgrade head
+alembic upgrade <revision>
+
+3. Downgrade:
+alembic downgrade -1
+alembic downgrade <revision>
+
+Reference documents
+http://docs.sqlalchemy.org/en/rel_0_9/dialects/mssql.html
+http://alembic.readthedocs.org/en/latest/ops.html

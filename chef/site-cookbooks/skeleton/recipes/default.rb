@@ -21,14 +21,13 @@ include_recipe 'redisio::enable'
 if db[:host] == 'localhost'
 
     include_recipe 'postgresql::server'
-    db_user = db[:user]
 
-    postgresql_user db_user do
+    postgresql_user db[:username] do
         password db[:password]
     end
 
     postgresql_database db[:database] do
-        owner db_user
+        owner db[:username]
     end
 end
 
@@ -68,16 +67,11 @@ python_virtualenv python_env do
     owner app_user
 end
 
-
-template "#{site_dir}/config/db.json"
+#template "#{site_dir}/config/db.json"
 
 template "#{site_dir}/config/uwsgi.ini" do
     owner app_user
     group app_user
-end
-
-template "#{site_dir}/run.py" do
-    owner app_user
 end
 
 template "#{site_dir}/config/main.py" do
@@ -98,40 +92,45 @@ template "#{script_dir}/skeleton.sh" do
 end
 
 template "/etc/init/#{app_name}.conf" do
-    source 'upstart-skeleton.erb'
+    source 'skeleton-upstart.erb'
 end
 
-#template "#{site_dir}/worker.py" do
-#    source 'worker.py.erb'
-#    owner app_user
-#    group app_user
-#end
-
 template "#{script_dir}/worker.sh" do
+    source 'worker.sh.erb'
     mode '755'
 end
 
 template "/etc/init/#{app_name}_worker.conf" do
-    source 'upstart-worker.erb'
+    source 'worker-upstart.erb'
+end
+
+#template "#{site_dir}/run.py" do
+#    owner app_user
+#end
+
+template "#{site_dir}/worker.py" do
+    source 'worker.py.erb'
+    owner app_user
+    group app_user
 end
 
 # script to excute i18n in Flask
 #template "#{script_dir}/tr_compile.sh" do
-    #source 'tr_compile.sh.erb'
-    #mode '755'
+#    source 'tr_compile.sh.erb'
+#    mode '755'
 #end
 
 #template "#{script_dir}/tr_update.sh" do
-    #source 'tr_update.sh.erb'
-    #mode '755'
+#    source 'tr_update.sh.erb'
+#    mode '755'
 #end
 
 #template "#{script_dir}/tr_ini.sh" do
-    #source 'tr_ini.sh.erb'
-    #mode '755'
+#    source 'tr_ini.sh.erb'
+#    mode '755'
 #end
 
-#deploy script
+
 template "#{script_dir}/deploy.sh" do
     source 'deploy.sh.erb'
     mode '755'
@@ -142,6 +141,10 @@ template "#{script_dir}/monitor.sh" do
     mode '755'
 end
 
+template "#{site_dir}/alembic.ini" do
+    source 'alembic.ini.erb'
+    mode '755'
+end
 
 service app_name do
     provider Chef::Provider::Service::Upstart
@@ -153,27 +156,11 @@ service "#{app_name}_worker" do
     action [:enable, :start, :restart]
 end
 
-# Install python dependencies
-bash 'install python dependencies' do
+bash 'Update db schema' do
+    cwd "#{site_dir}"
     code <<-EOH
-        . #{python_env}/bin/activate
-        pip install -r #{site_dir}/requirements.txt
-    EOH
-end
-
-# Install schemup dependencies
-bash 'install schemup dependencies' do
-    code <<-EOH
-        . #{python_env}/bin/activate
-        pip install -r #{site_dir}/schema/requirements.txt
-    EOH
-end
-
-bash 'run schemup' do
-    cwd "#{site_dir}/schema"
-    code <<-EOH
-        . #{python_env}/bin/activate
-        python update.py commit
+        . scripts/set_env.sh
+        alembic upgrade head
     EOH
 end
 

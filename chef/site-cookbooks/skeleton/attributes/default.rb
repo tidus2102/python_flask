@@ -1,9 +1,10 @@
 default[:skeleton][:app_name] = 'skeleton'
 default[:skeleton][:app_user] = 'skeleton'
 
-default[:skeleton][:db][:database] = 'skeleton'
+default[:skeleton][:db][:driver] = 'postgresql'
 default[:skeleton][:db][:host] = 'localhost'
-default[:skeleton][:db][:user] = 'skeleton'
+default[:skeleton][:db][:database] = 'skeleton'
+default[:skeleton][:db][:username] = 'skeleton'
 
 default[:skeleton][:port] = 8125
 default[:skeleton][:stat_port] = 24125
@@ -19,9 +20,6 @@ default[:skeleton][:protocol] = 'http://'
 
 #environment: local or dev or prod
 default[:skeleton][:env] = 'dev'
-
-#db log debug
-default[:skeleton][:db][:debug] = false
 
 #emails
 default[:skeleton][:emails][:admin] = 'tidus2102@gmail.com'
@@ -46,7 +44,7 @@ default[:skeleton][:debug] = true
 #    :debug => false,
 #}
 
-#default[:audi_manager][:gcm][:api_key] = "AIzaSyCRTK18MJ4mmOwYe_PorRFAdd26oQKH_Xc"
+default[:skeleton][:gcm][:api_key] = "AIzaSyCRTK18MJ4mmOwYe_PorRFAdd26oQKH_Xc"
 
 # Redis config
 default[:redisio][:default_settings][:logfile] = '/var/log/redis.log'

@@ -3,7 +3,6 @@ from app.models.user import User
 from flask.ext.script import Command
 from flask import render_template, current_app
 
-
 """
 class CheckExpired(Command):
     def run(self):
@@ -37,5 +36,18 @@ class NotifyExpired(Command):
                     content=render_template('mail/will_expire.html',
                         user=user, day=day)
                     )
+
+class HashAccessToken():
+    def run(self):
+        from app.models.user_token import UserToken
+        from app.models import db
+        import bcrypt
+
+        user_tokens = UserToken.query.all()
+        for ut in user_tokens:
+            print "ID: %s AT: %s" % (ut.id, ut.access_token)
+            ut.access_token = bcrypt.hashpw(ut.access_token, bcrypt.gensalt(10))
+            print "ID: %s AT: %s" % (ut.id, ut.access_token)
+            db.session.add(ut)
         db.session.commit()
 """

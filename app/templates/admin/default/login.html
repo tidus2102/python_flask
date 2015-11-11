@@ -1,0 +1,47 @@
+{% extends "admin/layout/admin.html" %}
+{% block content %}
+    <div class="col-md-6 col-md-offset-3">
+        {{ FlaskAjaxForm.startForm({
+            'id': 'form-login',
+            'cssClass': 'form-horizontal',
+            'action': url_for('admin_blueprint.login'),
+
+            'beforeSubmit': 'function() {
+                $("#form-login .alert-danger").html("");
+                $("#form-login .alert-danger").addClass("hide");
+            }',
+
+            'successCallback': 'function(data) {
+                alert(data);
+                window.location = data.redirect_uri;
+            }'
+          }) |safe }}
+
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <div class="col-sm-12">
+                {{ form.email(placeholder=form.email.label.text, class='form-control') }}
+                <div class="alert alert-danger hide" id="email_error"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                {{ form.password(placeholder=form.password.label.text, class='form-control') }}
+                <div class="alert alert-danger hide" id="password_error"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button class="btn btn-primary btn-block" type="submit">{{ _("Log In") }}</button>
+            </div>
+        </div>
+{#        <div class="form-group text-center">#}
+{#            <a class="text-muted" href="{{ url_for('user_route.forgot_password') }}">{{ _("Forgot Password") }}</a>#}
+{#        </div>#}
+{#        <div class="form-group text-center">#}
+{#            {{ _('Not a member?') }}#}
+{#            <a href="/signup" class="">{{ _('Sign up now') }}</a>#}
+{#        </div>#}
+        {{ FlaskAjaxForm.endForm() |safe }}
+    </div>
+{% endblock %}

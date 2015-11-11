@@ -67,8 +67,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         chef.json = {
             :skeleton => {
+                :env => 'local',
                 :app_user => 'vagrant',
                 :app_name => 'skeleton',
+                :log_dir => '/vagrant/logs',
+                :pid_dir => '/tmp/skeleton',
+                :server_name => 'localhost',
+                :site_dir => '/vagrant',
+                :socket_dir => '/tmp/skeleton',
+                :db => {
+                    :password => 'vagrant',
+                },
+                :email => {
+                    :admin => 'admin@vagrant.local',
+                    :sender => 'sender@vagrant.local',
+                },
                 :blocked_keywords => [
                     "/phpMyAdmin",
                     "/mysqladmin",
@@ -78,19 +91,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "/proxy.txt",
                     ".php",
                 ],
-                :db => {
-                    :password => 'vagrant',
-                },
-                :email => {
-                    :admin => 'admin@vagrant.local',
-                    :sender => 'sender@vagrant.local',
-                },
-                :env => 'local',
-                :log_dir => '/vagrant/logs',
-                :pid_dir => '/tmp/skeleton',
-                :server_name => 'localhost',
-                :site_dir => '/vagrant',
-                :socket_dir => '/tmp/skeleton',
             },
 
             # Vagrant attributes

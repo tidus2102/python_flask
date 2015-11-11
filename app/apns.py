@@ -1,3 +1,4 @@
+from app import app
 from apns_clerk import Session, APNs, Message
 
 # TODO: Use feedback service to remove invalid tokens (need DB access
@@ -10,7 +11,6 @@ _connection = None
 def _get_connection():
     global _connection
     if _connection is None:
-        from app import app
         config = app.config["apns"]
         _connection = _session.get_connection(
             "push_sandbox" if config.get("sandbox") else "push_production",
@@ -19,7 +19,6 @@ def _get_connection():
     return _connection
 
 def _do_send(tokens, **kwargs):
-    from app import app
     message = Message(tokens, **kwargs)
     service = APNs(_get_connection())
 
@@ -46,7 +45,6 @@ def _do_send(tokens, **kwargs):
 
 
 def send(tokens, **kwargs):
-    from app import app
     # TODO: Better to defer to a thread pool of size 1 (in the long
     # term we may switch to a job queue system like Celery, or
     # signaling a separate process dedicated to sending push

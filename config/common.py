@@ -29,30 +29,29 @@ IMG_SIZES = {
     }
 }
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 config = {
-    'DOMAIN': 'skeleton.bestacker.com',
-    'MAX_CONTENT_LENGTH': 2 * 1024 * 1024,
     'IMG_DIRS': IMG_DIRS,
     'IMG_SIZES': IMG_SIZES,
-    'ALLOWED_EXTENSIONS': ALLOWED_EXTENSIONS,
+    'ALLOWED_EXTENSIONS': set(['png', 'jpg', 'jpeg', 'gif']),
+    'MAX_CONTENT_LENGTH': 2 * 1024 * 1024,
     'DATETIME_FORMAT': "%d-%m-%Y %H:%M",
     'DATE_FORMAT': '%d-%m-%Y',
     'TIME_FORMAT': '%H:%M',
-    'SECRET_KEY': 'flask-session-insecure-secret-key',
-    'SQLALCHEMY_DATABASE_URI': '',
-    'SQLALCHEMY_ECHO': False,
-    'CSS_SYNC_PORT': 9264,
-    'debug': True,
-    'email': {
-    },
-    'apns': {
-    },
-    'gcm': {},
     'LANGUAGES': (
         ('vi', u'Tiếng Việt'),
         ('en', u'English')
     ),
-    'english_domains': ['skeleton.bestacker.com']
+    #'english_domains': ['skeleton.bestack.com']
+    #'DOMAIN': 'skeleton.bestacker.com',
+    # 'SECRET_KEY': 'flask-session-insecure-secret-key',
+    # 'SQLALCHEMY_DATABASE_URI': '',
+    # 'SQLALCHEMY_ECHO': False,
+
+    # 'email': {
+    # },
+    # 'apns': {
+    # },
+    # 'gcm': {},
+    # 'debug': True,
 }

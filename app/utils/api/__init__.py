@@ -5,15 +5,15 @@ from flask.ext.babelex import gettext
 
 
 class ResponseStatus:
-    INVALID_REQUEST = "invalid_request"
-    INVALID_METHOD = "invalid_method"
-    UNAUTHENTICATION = "unauthentication"
-    NOT_FOUND = "not_found"
-    WRONG_USERNAME_OR_PASSWORD = "wrong_username_or_password"
-    VALIDATION = "validation_error"
-
-    RESP_OK = 200
-    RESP_BAD = 400
+    OK = "OK"
+    LOGIN_FAILED = "LOGIN_FAILED"
+    PERMISSION_DENIED = "PERMISSION_DENIED"
+    VERSION_UPDATE_REQUIRED = "VERSION_UPDATE_REQUIRED"
+    VALIDATION_FAILED = "VALIDATION_FAILED"
+    REQUEST_INVALID = "REQUEST_INVALID"
+    DATA_NOT_FOUND = "DATA_NOT_FOUND"
+    ERROR = "ERROR"
+    INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
 
 
 class ApiInfo:
@@ -22,16 +22,16 @@ class ApiInfo:
 
     VERSION = "1.0"
     URI_BASE = "/api"
-    URI_V1 = "/api/v1.0"
+    URI_V1 = "/api/1.0"
 
 
-class ApiError(Exception):
-    def __init__(self, message, status=ResponseStatus.VALIDATION, data=None, httpStatus=ResponseStatus.RESP_BAD):
-        Exception.__init__(self, message)
-        self.message = message
-        self.status = status
-        self.data = data
-        self.httpStatus = httpStatus
+# class ApiError(Exception):
+#     def __init__(self, message, status=ResponseStatus.VALIDATION, data=None, httpStatus=ResponseStatus.RESP_BAD):
+#         Exception.__init__(self, message)
+#         self.message = message
+#         self.status = status
+#         self.data = data
+#         self.httpStatus = httpStatus
 
 
 class ApiResource(Resource):
