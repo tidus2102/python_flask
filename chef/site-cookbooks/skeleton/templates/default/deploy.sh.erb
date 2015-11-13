@@ -3,16 +3,13 @@
 <% site_dir = node[:skeleton][:site_dir] -%>
 <% env = node[:skeleton][:env] -%>
 
-. <%= node[:skeleton][:python][:virtualenv] %>/bin/activate
-
 # update latest version
 cd <%= site_dir %>
 sudo git fetch
 sudo git reset origin/master --hard
 
-# Run update db schema
-#cd <%= site_dir %>/schema
-#python update.py commit
+# update db schema
+alembic upgrade head
 
-# Restart service
+# restart service
 sudo restart <%= node[:skeleton][:app_name] %>

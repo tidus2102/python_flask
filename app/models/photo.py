@@ -12,8 +12,11 @@ class Photo(Base, db.Model):
     # Attributes #
     ##############
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('tbl_user.id'))
-    name = db.Column(db.UnicodeText())
+    created_at = db.Column(UTCDateTime, default=lambda: pytz.UTC.localize(datetime.utcnow()))
+    updated_at = db.Column(UTCDateTime, default=lambda: pytz.UTC.localize(datetime.utcnow()))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('tbl_user.id'))
+    file_name = db.Column(db.UnicodeText())
     created_at = db.Column(UTCDateTime, default=lambda: pytz.UTC.localize(datetime.utcnow()))
     updated_at = db.Column(UTCDateTime, default=lambda: pytz.UTC.localize(datetime.utcnow()))
     is_deleted = db.Column(db.Boolean, default=False)
@@ -37,9 +40,9 @@ class Photo(Base, db.Model):
         })
         return json
 
-    # Check if the sender
-    def isSender(self, check_user_id):
-        return self.sender_id != check_user_id
+    # Check if the owner
+    def isOwner(self, user_id):
+        return self.user_id != user_id
 
     # Update photo image: create new if new photo, update current image if exist
     def updateImage(self, image):

@@ -1,8 +1,8 @@
 from flask.ext.sqlalchemy import models_committed
+from app.models.email import Email
+from app import mail
 from app.models.notification import Notification
-#from app import mail
-
-from app import notification as pnotification
+from app import noti
 
 def wire(app):
 
@@ -10,16 +10,16 @@ def wire(app):
     def sendMessages(sender, changes):
         for obj, change in changes:
 
-            """
+
             if isinstance(obj, EmailMessage) and change == "insert":
                 # maybeDeferred is used so that exceptions raised from
                 # mail.send does not stop other emails from being sent.
                 # It's probably cleaner to make sure mail.send never
                 # raises an exception, (always returning a deferred
                 # that succeeds/fails instead)
-                message = obj
                 # TODO: Track status of email
                 # TODO: Handle errors somehow
+                message = obj
                 mail.send(
                     to_list=[{"email": e} for e in message.receiver_emails],
                     subject=message.subject,
@@ -27,9 +27,9 @@ def wire(app):
                     sender_mail=message.sender_email,
                     sender_name=message.sender_name
                 )
-            """
+
             if isinstance(obj, Notification) and change == "insert":
                  notification = obj
 
-                 pnotification.sendNoti('apns', notification.user_id, notification.getMessage(), notification.getOptionData())
-                 pnotification.sendNoti('gcm', notification.user_id, notification.getMessage(), notification.getOptionData())
+                 noti.sendNoti('apns', notification.user_id, notification.getMessage(), notification.getOptionData())
+                 noti.sendNoti('gcm', notification.user_id, notification.getMessage(), notification.getOptionData())

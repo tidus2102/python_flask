@@ -1,4 +1,4 @@
-"""tbl_user 1 hn create tbl_user table
+"""tbl_user 1 hn create table
 
 Revision ID: 2c6d7f9d1158
 Revises: 

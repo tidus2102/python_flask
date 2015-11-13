@@ -138,6 +138,7 @@ end
 
 #show stat script
 template "#{script_dir}/monitor.sh" do
+    source 'monitor.sh.erb'
     mode '755'
 end
 

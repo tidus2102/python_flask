@@ -73,7 +73,7 @@ class ApiPhoto(ApiResource):
         if not photo:
             abort(404, message=gettext("NOT_FOUND"))
 
-        if photo.isSender(user.id):
+        if photo.isOwner(user.id):
             abort(403, message=gettext("PERMISSION_DENIE"))
 
         # Commit query and write to db

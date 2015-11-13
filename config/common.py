@@ -19,14 +19,6 @@ IMG_SIZES = {
         "small": 128,
         "thumb": 64
     },
-    "paty_icon":{
-        "small": 128,
-        "thumb": 64
-    },
-    "photo":{
-        "small": 200,
-        "thumb": 128
-    }
 }
 
 

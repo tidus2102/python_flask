@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy.types import TypeDecorator, DateTime
 import pytz
 from datetime import datetime
-from sqlalchemy.types import TypeDecorator, DateTime
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.sqlalchemy import event
+#from flask.ext.sqlalchemy import event
 from app.utils import helper
 
 db = SQLAlchemy()
+db1 = SQLAlchemy()
 
 # SQLAlchemy does not support Datetime timezone aware type
 # e.g DateTime(tzinfo=pytz.UTC)
@@ -15,6 +15,9 @@ class UTCDateTime(TypeDecorator):
     impl = DateTime
     def process_bind_param(self, value, engine):
         if value is not None:
+            if type(value) == unicode or type(value) == str:
+                value = parser.parse(value)
+
             if value.tzinfo is None:
                 return value.replace(tzinfo=pytz.UTC)
             return value.astimezone(pytz.UTC)
@@ -33,7 +36,8 @@ class Base(object):
     def __declare_last__(cls):
         # get called after mappings are completed
         # http://docs.sqlalchemy.org/en/rel_0_7/orm/extensions/declarative.html#declare-last
-        event.listen(cls, 'before_update', cls.update_time)
+        #event.listen(cls, 'before_update', cls.update_time)
+        pass
 
     @classmethod
     def findById(cls, id):
