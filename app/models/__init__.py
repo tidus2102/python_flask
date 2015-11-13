@@ -6,4 +6,4 @@ from user_token import UserToken
 from notification import Notification
 
 __all__ = [
-    'db', 'Email', 'User', 'UserToken', 'Notification']
+    'db', 'Activity', 'Email', 'User', 'UserToken', 'Notification']
