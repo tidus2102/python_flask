@@ -68,11 +68,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         chef.json = {
             :skeleton => {
                 :env => 'local',
+                :server_name => 'localhost',
+                :endpoint => 'localhost:9990',
                 :app_user => 'vagrant',
                 :app_name => 'skeleton',
                 :log_dir => '/vagrant/logs',
                 :pid_dir => '/tmp/skeleton',
-                :server_name => 'localhost',
                 :site_dir => '/vagrant',
                 :socket_dir => '/tmp/skeleton',
                 :db => {

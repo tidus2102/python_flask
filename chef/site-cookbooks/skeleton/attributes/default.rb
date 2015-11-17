@@ -13,7 +13,7 @@ default[:skeleton][:secret_key] = 'dHKEf1IXUV6pHULHaAOUaL0podQzs9ubg'
 
 default[:skeleton][:python][:virtualenv] = '/home/skeleton/.virtualenvs/skeleton'
 default[:skeleton][:has_loadbalancer] = false
-default[:skeleton][:endpoint] = 'skeleton.cogini.com'
+default[:skeleton][:endpoint] = ''
 default[:skeleton][:protocol] = 'http://'
 
 # This is more like a constant. Don't change it, as v0.11.12 has error
